@@ -53,7 +53,10 @@ h3 {
 body,
 .main,
 [role=main] {
-  background: #f6f6f6;
+  background: #d7e5f1;
+  /*
+  background: #bac9d4;
+  background: #f6f6f6;*/
 }
 #content {
   margin-top: 0;
@@ -114,7 +117,8 @@ a {
 .masthead .container {
   width: 940px;
   margin-top: 0px;
-  background: #ffffff url("../images/header-line.png?1") 100% 100% no-repeat;
+  background: #9cbcd4;
+  /*background: #ffffff url("../images/header-line.png?1") 100% 100% no-repeat;*/
   -webkit-border-radius: 3px 3px 0 0;
   -moz-border-radius: 3px 3px 0 0;
   -o-border-radius: 3px 3px 0 0;
@@ -123,7 +127,8 @@ a {
 .masthead .container .top {
   *zoom: 1;
   position: relative;
-  background: url("http://www.data.gov/sites/all/themes/datagov/images/header-start-bg.jpg");
+  background: #9cbcd4;
+  /*background: url("http://www.data.gov/sites/all/themes/datagov/images/header-start-bg.jpg");*/
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
   -o-border-radius: 4px 4px 0 0;
