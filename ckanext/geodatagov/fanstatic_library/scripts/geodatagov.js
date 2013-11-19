@@ -1,7 +1,7 @@
 this.ckan.module('geodatagov-site-wide-search', function($, _) {
   return {
     options: {
-      base_url: 'http://www.data.gov/search/node/'
+      base_url: 'http://54.204.35.58/search/node/'
     },
     initialize: function() {
       var el = this.el;

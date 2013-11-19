@@ -14,7 +14,7 @@
     <div class="container">
       <hgroup class="top">
         <div class="logo">
-          <a href="http://www.data.gov/" class="root"><span>{{ _('data.gov') }}</span></a>
+          <a href="http://54.204.35.58/dataset" class="root"><span>{{ _('data.noaa.gov') }}</span></a>
         </div>
         {% block header_account %}
           <div class="account-wrapper">
@@ -68,15 +68,15 @@
             <button type="submit" value="{{ _('Search') }}">Submit</button>
            </span>
         </form>
-        <form class="site-wide-search" action="http://www.data.gov/search/node/" method="get" data-module="geodatagov-site-wide-search">
-          <label for="field-sitewide-search" class="hide">{{ _('Search Data.gov') }}</label>
+        <form class="site-wide-search" action="http://54.204.35.58/search/node/" method="get" data-module="geodatagov-site-wide-search">
+          <label for="field-sitewide-search" class="hide">{{ _('Search data.noaa.gov') }}</label>
           <input id="field-sitewide-search" type="text" name="q" placeholder="{{ _('Search Data.gov') }}" />
           <button class="btn-search" type="submit">{{ _('Search') }}</button>
         </form>
       </hgroup>
 
       <hgroup class="top-nav">
-        {% include 'snippets/root_nav.html' %}
+        <!-- {% include 'snippets/root_nav.html' %} -->
         {% block header_site_navigation %}
           <div class="secondary">
             <span>{{ _('Data Catalog') }}</span>

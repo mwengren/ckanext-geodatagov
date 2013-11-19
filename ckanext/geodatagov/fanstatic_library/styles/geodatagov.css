@@ -156,9 +156,10 @@ a {
 .masthead .container .logo a {
   display: block;
   float: left;
-  height: 55px;
-  background-image: url("http://www.data.gov/sites/all/themes/datagov/logo.png");
-  width: 208px;
+  height: 37px;
+  background-image: url("http://54.204.35.58/fantastic/geodatagov/images/datanoaagov_logo.png");
+  /*background-image: url("http://54.204.35.58/sites/all/themes/datagov/logo.png");*/
+  width: 325px;
 }
 .masthead .container .logo a span {
   display: none;
