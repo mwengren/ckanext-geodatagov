@@ -117,8 +117,9 @@ a {
 .masthead .container {
   width: 940px;
   margin-top: 0px;
-  background: #9cbcd4;
-  /*background: #ffffff url("../images/header-line.png?1") 100% 100% no-repeat;*/
+  background: #b6d2e7;
+  /*background: #9cbcd4;
+  background: #ffffff url("../images/header-line.png?1") 100% 100% no-repeat;*/
   -webkit-border-radius: 3px 3px 0 0;
   -moz-border-radius: 3px 3px 0 0;
   -o-border-radius: 3px 3px 0 0;
@@ -127,7 +128,8 @@ a {
 .masthead .container .top {
   *zoom: 1;
   position: relative;
-  background: #9cbcd4;
+   background: #b6d2e7;
+  /*background: #9cbcd4;
   /*background: url("http://www.data.gov/sites/all/themes/datagov/images/header-start-bg.jpg");*/
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
@@ -892,7 +894,7 @@ input:-moz-placeholder {
 .search-box-new {
     position: absolute;
     top: 50px;
-    right: 245px;
+    right: 10px;
     margin: 5px 10px;
 }
 input.search-new{
