@@ -179,6 +179,7 @@ a {
 .masthead .container .logo a span {
   display: none;
 }
+
 .masthead .container .beta {
   position: absolute;
   top: 25px;
@@ -403,17 +404,17 @@ a {
   text-transform: uppercase;
 }
 .masthead .container .top-nav .secondary span {
-  display: block;
+  /*display: block;*/
   padding-left: 20px;
   padding-right: 20px;
   font-size: 21px;
 }
-.masthead .container .top-nav .secondary span.sub {
-  display: block;
-  padding-left: 20px;
-  padding-right: 20px;
+.masthead .container .top-nav .secondary span.under_development {
+  padding-left: 0px;
   font-size: 14px;
 }
+
+
 .flash-messages {
   padding: 10px;
   border: 1px solid #CCC;
