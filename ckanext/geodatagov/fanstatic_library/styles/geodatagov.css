@@ -408,6 +408,12 @@ a {
   padding-right: 20px;
   font-size: 21px;
 }
+.masthead .container .top-nav .secondary span.sub {
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+}
 .flash-messages {
   padding: 10px;
   border: 1px solid #CCC;
