@@ -101,7 +101,7 @@ a {
   clear: both;
 }
 .pre-header {
-  background: #0a3163 url("http://www.data.gov/sites/all/themes/datagov/images/preheader-bg.jpg") repeat-x center top;
+  /*background: #0a3163 url("http://www.data.gov/sites/all/themes/datagov/images/preheader-bg.jpg") repeat-x center top;*/
   color: white;
   font-style: italic;
   font-size: 11px;
@@ -200,11 +200,12 @@ a {
   padding: 6px 10px;
 }
 .masthead .container .account-wrapper .not-authed a {
-  color: #284a7a;
+  /*color: #284a7a;*/
+  color: #F5F5F5;
   font-weight: bold;
   padding-left: 16px;
   font-size: 12px;
-  background: transparent url("http://www.data.gov/sites/all/themes/datagov/images/icon-login.gif") 0 50% no-repeat;
+  /*background: transparent url("http://www.data.gov/sites/all/themes/datagov/images/icon-login.gif") 0 50% no-repeat;*/
 }
 .masthead .container .account-wrapper .not-authed a span {
   text-decoration: underline;
@@ -263,7 +264,8 @@ a {
     font-size: 11px;
     width: 184px;
     padding-left: 11px;
-    background: url("http://www.data.gov/sites/all/themes/datagov/images/search-box-new.jpg");
+    background: #F5F5F5;
+	/*background: url("http://www.data.gov/sites/all/themes/datagov/images/search-box-new.jpg");*/
 }
 .masthead .container .site-wide-search button {
     font: 0/0 a;
@@ -271,7 +273,9 @@ a {
     text-shadow: none;
     background-color: transparent;
     border: 0;
-    background: url("http://www.data.gov/sites/all/themes/datagov/images/search_new.png");
+    background: url("../images/search_new.png");
+	/*background: url("http://www.data.gov/sites/all/themes/datagov/images/search_new.png");*/
+	
     background-repeat:no-repeat;
     width: 25px;
     height: 28px;
