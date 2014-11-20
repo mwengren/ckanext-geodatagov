@@ -917,12 +917,14 @@ input:-moz-placeholder {
     margin: 5px 10px;
 }
 input.search-new{
-    background: url("http://www.data.gov/sites/all/themes/datagov/images/search-box-new.jpg") repeat scroll 0 0 transparent;
+	background: #F5F5F5;
+    /*background: url("http://www.data.gov/sites/all/themes/datagov/images/search-box-new.jpg") repeat scroll 0 0 transparent;*/
     border:0 none;
     width:189px;
 }
 .search-box-new button{
-    background: url("http://www.data.gov/sites/all/themes/datagov/images/search_new.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/search_new.png");
+    /*background: url("http://www.data.gov/sites/all/themes/datagov/images/search_new.png") no-repeat scroll 0 0 transparent;*/
     border: 0 none;
     color: transparent;
     font: 0px/0 a;
