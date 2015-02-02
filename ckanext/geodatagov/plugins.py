@@ -121,6 +121,15 @@ def split_tags(tag):
         tags.extend(tag.split('>'))
     return [tag.strip().lower() for tag in tags]
 
+def uniq_list(seq):
+    # *********
+    # order preserving
+    checked = []
+    for e in seq:
+        if e not in checked:
+            checked.append(e)
+    return checked
+
 ##copied from harvest but deals withe single item list keys like validation
 def harvest_source_convert_from_config(key,data,errors,context):
     config = data[key]
@@ -291,6 +300,7 @@ class Demo(p.SingletonPlugin):
                 tags = pkg_dict.get('tags', [])
                 tags.extend([dict(name=tag, display_name=tag) for tag
                              in split_tags(extra['value'])])
+                tags = uniq_list(tags)
                 pkg_dict['tags'] = tags
                 pkg_dict['extras'].pop(num)
                 break
