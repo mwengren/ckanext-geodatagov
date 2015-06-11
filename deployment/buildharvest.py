@@ -82,7 +82,7 @@ def build_harvest_script():
             gather_finished = last_job['gather_finished']
             harvest_job_url = "https://{}/harvest/{}/job/{}".format(host, name, id)
             
-        except KeyError:
+        except (KeyError, TypeError) as e:
             job_status = "Unknown"
             errors = 0
             added = 0
