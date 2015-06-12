@@ -45,7 +45,7 @@ def build_harvest_script():
     
     script_out = open(output_script, 'w')
     list_out = open(output_list, 'w')
-    if include_job_status: list_out.write("Name, Title, URL, Total Datasets, Job Count, Job Status, Errors, Added, Job URL, Created, Gather Started, Gather Finished, Finished \n")
+    if include_job_status: list_out.write("Name, Title, URL, Total Datasets, Harvest Job Count, Last Harvest Job Status, Errors (Last Job), Datasets Added (Last Job), Job URL, Job Created, Gather Started, Gather Finished, Job Finished \n")
     else: list_out.write("Name, Title, URL, Total Datasets \n")
     
     print result['result']['count']
