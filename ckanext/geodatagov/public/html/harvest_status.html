@@ -19,20 +19,53 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
 
         <script type="text/javascript"charset="utf-8">
-            d3.text("harvest_source_list.csv", function(data) {
-                var parsedCSV = d3.csv.parseRows(data);
+            /*  
+                This page will display a table view of a CKAN harvest status dump CSV file 
+                    (or any CSV file with info to dump into an HTML table)
+                Copy the example 'harvest_source_list.csv' from the ckanext-geodatagov/deployment 
+                directory to this folder, or generate one via cron and write out to this location.
+            */
+        
+            d3.text("harvest_source_list.csv", function(csv) {
+                var parsedCSV = d3.csv.parseRows(csv);
 
                 var container = d3.select("body")
-                    .append("table")
-
-                    .selectAll("tr")
+                    .append("table");
+                    
+                var rows = container.selectAll("tr")
                         .data(parsedCSV).enter()
-                        .append("tr")
+                        .append("tr");
 
-                    .selectAll("td")
-                        .data(function(d) { return d; }).enter()
-                        .append("td")
-                        .text(function(d) { return d; });
+                /*
+                .filter(function(d) {
+                        return (d.toString().search("^(http|https)://") != -1)
+                    })
+                */
+                
+                var cells = rows.selectAll("td")
+                    .data(function(d) { 
+                        console.log(d);
+                        return d;
+                    });
+                
+                var tds = cells.enter()
+                    .append("td");
+                
+                tds.filter(function(d, i) { return d.search("^(http|https)://") == -1 })
+                    .text(function(d) {
+                            /*
+                            if (d.search("^(http|https)://") == -1) {
+                                return d;
+                            }
+                            */
+                            return d;
+                    });
+
+                tds.filter(function(d, i) { return d.search("^(http|https)://") != -1 })
+                    .html(function(d) { 
+                        return ("<a href='" + d + "'>" + d + "</a>")
+                    });
+                
             });
         </script>
     </body>
