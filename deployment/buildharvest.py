@@ -36,7 +36,7 @@ def build_harvest_script():
     
     #url_params = urllib.quote(url_params)
     url = "https://%s/api/3/action/package_search?" % (host) + url_params
-    print ("url: {}").format(url)
+    print ("url: {0}".format(url))
    
     
     response = requests.get(url, verify=verify_cert)
@@ -80,7 +80,7 @@ def build_harvest_script():
             finished = last_job['finished']
             gather_started = last_job['gather_started']
             gather_finished = last_job['gather_finished']
-            harvest_job_url = "https://{}/harvest/{}/job/{}".format(host, name, id)
+            harvest_job_url = "https://{0}/harvest/{1}/job/{2}".format(host, name, id)
             
         except (KeyError, TypeError) as e:
             job_status = "Unknown"
