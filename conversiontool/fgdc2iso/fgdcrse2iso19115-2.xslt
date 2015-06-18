@@ -40,9 +40,10 @@
 		
 		See fgdcrse2iso19115-2-revisionHistory.txt for listing of all changes to this document.
 -->
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:grp="http://www.altova.com/Mapforce/grouping" exclude-result-prefixes="fn grp vmf xs xsi xsl">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:grp="http://www.altova.com/Mapforce/grouping" exclude-result-prefixes="fn grp vmf xs xsi xsl">
   <xsl:variable name="thisXSLT">FGDC RSE to ISO 19115-2 transform</xsl:variable>
-  <xsl:variable name="LastUpdateXSLT">2015-05-04</xsl:variable>
+  <xsl:variable name="LastUpdateXSLT">2015-06-17</xsl:variable>
   <!-- MD_CellGeometryCode -->
   <xsl:template name="vmf:vmf1_inputtoresult">
     <xsl:param name="input" select="()"/>
@@ -574,7 +575,7 @@
           </xsl:call-template>
         </gmd:contact>
       </xsl:for-each>
-      <gmd:dateStamp>        
+      <gmd:dateStamp>
         <xsl:comment><xsl:value-of select="normalize-space(//metd)"/></xsl:comment>
         <xsl:choose>
           <xsl:when test="(fn:contains(fn:lower-case(fn:normalize-space(fn:string(//metd))), 'unknown'))">
@@ -1638,31 +1639,46 @@
               </gco:CharacterString>
             </gmd:language>
             <xsl:for-each select="idinfo/keywords/theme">
-              <xsl:variable name="var661_theme" as="node()" select="."/>
+              <!--<xsl:variable name="var661_theme" as="node()" select="."/>-->
               <xsl:for-each select="themekey">
-                <xsl:variable name="var666_cond_result_contains" as="xs:boolean?">
-                  <xsl:if test="fn:contains(xs:string(xs:string($var661_theme/themekt)), 'ISO 19115')">
-                    <xsl:if test="fn:exists((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ()))">
-                      <xsl:if test="((('0' != fn:normalize-space((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ()))) and ('false' != fn:normalize-space((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ())))) and fn:boolean(fn:normalize-space((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ()))))">
-                        <xsl:sequence select="fn:true()"/>
-                      </xsl:if>
-                    </xsl:if>
+                <xsl:variable name="varTopicCategoryExists">
+                  <xsl:if test="normalize-space(../themekt)">
+                    <xsl:choose>
+                      <xsl:when test="contains(../themekt, 'ISO 19115')">true</xsl:when>
+                      <xsl:otherwise>false</xsl:otherwise>
+                    </xsl:choose>
                   </xsl:if>
-                </xsl:variable>
-                <xsl:if test="fn:exists($var666_cond_result_contains)">
+                </xsl:variable>              
+                <xsl:if test="$varTopicCategoryExists='true'">
                   <gmd:topicCategory>
-                    <!-- removed lower case function -->
-                    <xsl:if test="fn:contains(xs:string(xs:string($var661_theme/themekt)), 'ISO 19115')">
-                      <xsl:if test="fn:exists((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ()))">
-                        <xsl:if test="not(fn:contains(fn:normalize-space((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ())), '0'))">
-                          <gmd:MD_TopicCategoryCode>
-                            <xsl:sequence select="fn:normalize-space((if (((('0' != xs:string($var661_theme/themekt)) and ('false' != xs:string($var661_theme/themekt))) and fn:boolean(xs:string($var661_theme/themekt)))) then xs:string(.) else ()))"/>
-                          </gmd:MD_TopicCategoryCode>
-                        </xsl:if>
-                      </xsl:if>
-                    </xsl:if>
+                    <gmd:MD_TopicCategoryCode>
+                      <xsl:choose>
+                        <xsl:when test="normalize-space(upper-case(.))='BIOTA'">biota</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='BOUNDARIES'">boundaries</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='CLIMATOLOGYMETEOROLOGYATMOSPHERE'">climatologyMeteorologyAtmosphere</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='ECONOMY'">economy</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='ELEVATION'">elevation</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='ENVIRONMENT'">environment</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='FARMING'">farming</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='GEOSCIENTIFICINFORMATION'">geoscientificInformation</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='HEALTH'">health</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='IMAGERYBASEMAPSEARTHCOVER'">imageryBaseMapsEarthCover</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='INLANDWATERS'">inlandWaters</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='INTELLIGENCEMILITARY'">intelligenceMilitary</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='LOCATION'">location</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='OCEANS'">oceans</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='PLANNINGCADASTRE'">planningCadastre</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='SOCIETY'">society</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='STRUCTURE'">structure</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='TRANSPORTATION'">transportation</xsl:when>
+                        <xsl:when test="normalize-space(upper-case(.))='UTILITIESCOMMUNICATION'">utilitiesCommunication</xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="normalize-space(.)"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </gmd:MD_TopicCategoryCode>
                   </gmd:topicCategory>
-                </xsl:if>
+                </xsl:if>           
               </xsl:for-each>
             </xsl:for-each>
             <xsl:for-each select="//idinfo/native">
@@ -3035,7 +3051,7 @@
                   </xsl:for-each>
                   <xsl:for-each select="lineage/srcinfo">
                     <xsl:variable name="var2381_srcinfo" as="node()" select="."/>
-                    <gmd:source>                      
+                    <gmd:source>
                       <gmd:LI_Source>
                         <xsl:if test="./srccitea">
                           <xsl:choose>
@@ -3055,7 +3071,7 @@
                         </gmd:description>
                         <xsl:if test="./srcscale">
                           <gmd:scaleDenominator>
-                            <gmd:MD_RepresentativeFraction>                              
+                            <gmd:MD_RepresentativeFraction>
                               <xsl:comment>srcscale: <xsl:value-of select="./srcscale"/></xsl:comment>
                               <gmd:denominator>
                                 <xsl:for-each select="srcscale">
@@ -4128,7 +4144,7 @@
             </gco:CharacterString>
           </gmd:organisationName>
         </xsl:when>
-        <xsl:otherwise>          
+        <xsl:otherwise>
           <xsl:call-template name="Contact2ResponsibleParty"/>
         </xsl:otherwise>
       </xsl:choose>
