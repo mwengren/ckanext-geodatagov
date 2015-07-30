@@ -43,7 +43,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:grp="http://www.altova.com/Mapforce/grouping" exclude-result-prefixes="fn grp vmf xs xsi xsl">
   <xsl:variable name="thisXSLT">FGDC RSE to ISO 19115-2 transform</xsl:variable>
-  <xsl:variable name="LastUpdateXSLT">2015-06-17</xsl:variable>
+  <xsl:variable name="LastUpdateXSLT">2015-07-24</xsl:variable>
   <!-- MD_CellGeometryCode -->
   <xsl:template name="vmf:vmf1_inputtoresult">
     <xsl:param name="input" select="()"/>
@@ -792,12 +792,7 @@
             <xsl:variable name="var127_ptvctinf" as="node()" select="."/>
             <gmd:MD_VectorSpatialRepresentation>
               <xsl:for-each select="vpfterm">
-                <gmd:topologyLevel>
-                  <gmd:MD_TopologyLevelCode>
-                    <xsl:attribute name="gco:nilReason">
-                      <xsl:value-of select="'template'"/>
-                    </xsl:attribute>
-                  </gmd:MD_TopologyLevelCode>
+                <gmd:topologyLevel gco:nilReason="template">
                   <xsl:comment>
                     <xsl:text>FGDC content did not map to ISO. Hand edit MD_TopologyLevelCode. </xsl:text>
                   </xsl:comment>
@@ -1648,9 +1643,10 @@
                       <xsl:otherwise>false</xsl:otherwise>
                     </xsl:choose>
                   </xsl:if>
-                </xsl:variable>              
+                </xsl:variable>
                 <xsl:if test="$varTopicCategoryExists='true'">
-                  <gmd:topicCategory>
+                  <xsl:if test="not(number(.))">
+                    <gmd:topicCategory>
                     <gmd:MD_TopicCategoryCode>
                       <xsl:choose>
                         <xsl:when test="normalize-space(upper-case(.))='BIOTA'">biota</xsl:when>
@@ -1672,13 +1668,14 @@
                         <xsl:when test="normalize-space(upper-case(.))='STRUCTURE'">structure</xsl:when>
                         <xsl:when test="normalize-space(upper-case(.))='TRANSPORTATION'">transportation</xsl:when>
                         <xsl:when test="normalize-space(upper-case(.))='UTILITIESCOMMUNICATION'">utilitiesCommunication</xsl:when>
+                        
                         <xsl:otherwise>
                           <xsl:value-of select="normalize-space(.)"/>
                         </xsl:otherwise>
                       </xsl:choose>
                     </gmd:MD_TopicCategoryCode>
-                  </gmd:topicCategory>
-                </xsl:if>           
+                  </gmd:topicCategory></xsl:if>
+                </xsl:if>
               </xsl:for-each>
             </xsl:for-each>
             <xsl:for-each select="//idinfo/native">
@@ -2134,21 +2131,29 @@
                   <gmi:MI_RangeElementDescription>
                     <gmi:name>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(attrlabl)"/>
+                        <xsl:for-each select="attrlabl">
+                          <xsl:value-of select="normalize-space(.)" separator="; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:name>
                     <gmi:definition>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(attrdef)"/>
+                        <xsl:for-each select="attrdef">
+                          <xsl:value-of select="normalize-space(.)" separator="; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:definition>
                     <xsl:comment>Attribute Definition Source not translated: <xsl:value-of select="normalize-space(attrdefs)"/></xsl:comment>
                     <xsl:for-each select="./attrdomv/edom">
                       <gmi:rangeElement>
                         <gco:Record>
-                          <xsl:value-of select="normalize-space(edomv)"/>
-                          <xsl:text>: </xsl:text>
-                          <xsl:value-of select="normalize-space(edomvd)"/>
+                          <xsl:for-each select="edomv">
+                            <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                          </xsl:for-each>
+                          <xsl:text> | </xsl:text>
+                          <xsl:for-each select="edomvd">
+                            <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                          </xsl:for-each>
                         </gco:Record>
                       </gmi:rangeElement>
                     </xsl:for-each>
@@ -2160,18 +2165,24 @@
                   <gmi:MI_RangeElementDescription>
                     <gmi:name>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(./attrlabl)"/>
+                        <xsl:for-each select="./attrlabl">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:name>
                     <gmi:definition>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(./attrdef)"/>
+                        <xsl:for-each select="./attrdef">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:definition>
                     <xsl:comment>Attribute Definition Source not translated: <xsl:value-of select="normalize-space(attrdefs)"/></xsl:comment>
                     <gmi:rangeElement>
                       <gco:Record>
-                        <xsl:value-of select="normalize-space(./attrdomv/udom)"/>
+                        <xsl:for-each select="./attrdomv/udom">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:Record>
                     </gmi:rangeElement>
                   </gmi:MI_RangeElementDescription>
@@ -2182,20 +2193,28 @@
                   <gmi:MI_RangeElementDescription>
                     <gmi:name>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(./attrlabl)"/>
+                        <xsl:for-each select="./attrlabl">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:name>
                     <gmi:definition>
                       <gco:CharacterString>
-                        <xsl:value-of select="normalize-space(./attrdef)"/>
+                        <xsl:for-each select="./attrdef">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:CharacterString>
                     </gmi:definition>
                     <xsl:comment>Attribute Definition Source not translated: <xsl:value-of select="normalize-space(attrdefs)"/></xsl:comment>
                     <gmi:rangeElement>
                       <gco:Record>
-                        <xsl:value-of select="normalize-space(./attrdomv/codesetd/codesetn)"/>
-                        <xsl:text>: </xsl:text>
-                        <xsl:value-of select="normalize-space(./attrdomv/codesetd/codesets)"/>
+                        <xsl:for-each select="./attrdomv/codesetd/codesetn">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
+                        <xsl:text> | </xsl:text>
+                        <xsl:for-each select="./attrdomv/codesetd/codesets">
+                          <xsl:value-of select="normalize-space(.)" separator="' ; "/>
+                        </xsl:for-each>
                       </gco:Record>
                     </gmi:rangeElement>
                   </gmi:MI_RangeElementDescription>
@@ -2216,7 +2235,9 @@
                 </gmd:title>
                 <gmd:date gco:nilReason="inapplicable"/>
                 <gmd:otherCitationDetails>
-                  <gco:CharacterString>Entity and Attribute Detail Citation: <xsl:value-of select="normalize-space(eadetcit)"/></gco:CharacterString>
+                  <gco:CharacterString>
+                    <xsl:for-each select="eadetcit">Entity and Attribute Detail Citation: <xsl:value-of select="normalize-space(.)" separator="; "/></xsl:for-each>
+                  </gco:CharacterString>
                 </gmd:otherCitationDetails>
               </gmd:CI_Citation>
             </gmd:featureCatalogueCitation>
@@ -3057,10 +3078,7 @@
                           <xsl:choose>
                             <xsl:when test="upper-case(normalize-space(./srccitea))='NONE'"/>
                             <xsl:otherwise>
-                              <xsl:attribute name="id">
-                                <!-- Ted Habermann Added translation of ' ' to '_' and drop perentheses, slash and comma -->
-                                <xsl:value-of select="translate(normalize-space(./srccitea),' ()/,','_')"/>
-                              </xsl:attribute>
+                              <xsl:call-template name="idTransform"/>
                             </xsl:otherwise>
                           </xsl:choose>
                         </xsl:if>
@@ -3810,10 +3828,10 @@
             <!-- MI_Platform-->
             <xsl:choose>
               <xsl:when test="//plmiinfo/platinfo">
-                <xsl:for-each select="//platinfo">
+                 <xsl:for-each select="//platinfo">
                   <gmi:platform>
                     <gmi:MI_Platform>
-                      <xsl:choose>
+                      <!--<xsl:choose>
                         <xsl:when test="platflnm">
                           <gmi:identifier>
                             <gmd:MD_Identifier>
@@ -3828,7 +3846,7 @@
                         <xsl:otherwise>
                           <gmi:identifier gco:nilReason="missing"/>
                         </xsl:otherwise>
-                      </xsl:choose>
+                      </xsl:choose>-->
                       <!-- Added by Ted Habermann -->
                       <xsl:if test="//plainsid">
                         <xsl:for-each select="//platflnm">
@@ -3893,6 +3911,7 @@
                 </xsl:for-each>
               </xsl:when>
               <xsl:when test="//plainsid/platflnm">
+                <xsl:comment>xsl:when test="//plainsid/platflnm"</xsl:comment>
                 <xsl:for-each select="distinct-values(//platflnm)">
                   <gmi:platform>
                     <gmi:MI_Platform>
@@ -4095,6 +4114,15 @@
       <gmd:ISBN/>
       <gmd:ISSN/>-->
     </gmd:CI_Citation>
+  </xsl:template>
+  <xsl:template name="idTransform">
+    <xsl:variable name="id">
+      <xsl:value-of select="translate(normalize-space(./srccitea),' ()/,&amp;'':','_')"/>
+    </xsl:variable>
+    <xsl:attribute name="id">
+      <xsl:value-of select="concat('_',$id)"/>
+    </xsl:attribute>
+    <!--  Added translation of ' ' to '_' and drop parentheses, slash, comma, colon, &.  -->
   </xsl:template>
   <!--CI_ResponsibleParty-->
   <xsl:template name="CI_ResponsibleParty">
