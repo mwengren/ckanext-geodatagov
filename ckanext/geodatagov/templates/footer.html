@@ -1,23 +1,24 @@
 {% ckan_extends %}
 
-{% block footer_content %}
-  <!--  
+{% block footer_content %} 
   <nav class="footer-nav">
     {% block footer_nav %}
       <ul class="unstyled">
-        <li><a href="/about">{{ _('About') }}</a></li>
-        <li><a href="http://www.data.gov/accessibility">{{ _('Accessibility') }}</a></li>
-        <li><a href="http://www.data.gov/contact-us">{{ _('Contact Us') }}</a></li>
-        <li><a href="http://www.data.gov/data-policy">{{ _('Data Policy') }}</a></li>
-        <li><a href="http://www.data.gov/faq">{{ _('FAQ') }}</a></li>
-        <li><a href="http://www.data.gov/privacy-policy">{{ _('Privacy Policy') }}</a></li>
-        <li><a href="http://www.data.gov/sitemap">{{ _('Sitemap') }}</a></li>
+        <li><a href="http://www.noaa.gov/foia">{{ _('FOIA') }}</a></li>
+        <li><a href="http://www.noaa.gov/privacy.html">{{ _('Privacy Policy') }}</a></li>
+        <li><a href="http://www.cio.noaa.gov/services_programs/info_quality.html">{{ _('Information Quality') }}</a></li>
+        <li><a href="http://www.noaa.gov/disclaimer.html">{{ _('Disclaimer') }}</a></li>
         <li><a href="http://www.usa.gov">{{ _('USA.gov') }}</a></li>
+        <li><a href="http://www.ready.gov">{{ _('Ready.gov') }}</a></li>
+      </ul>
+      <ul class="unstyled">
+        <li>Website Owner: <a href="https://www.nosc.noaa.gov/EDMC/">{{ _('NOAA EDMC') }}</a></li>
+        <li>{{ _('Contact: noaa.data.catalog [at] noaa.gov') }}</li>
       </ul>
     {% endblock %}
-    <img src="http://www.data.gov/sites/all/themes/datagov/images/datagov-footer-logo.png" alt="{{ _('Data.gov') }}">
+    <!-- <img src="http://www.data.gov/sites/all/themes/datagov/images/datagov-footer-logo.png" alt="{{ _('Data.gov') }}"> -->
   </nav>
-  -->
+  
   {#
     {% block footer_lang %}
       {% snippet "snippets/language_selector.html" %}
