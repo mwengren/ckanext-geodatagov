@@ -19,7 +19,7 @@ def build_harvest_script():
     parser.add_argument('--include_job_status', dest='include_job_status', default=True, required=False, type='bool', help='Include output from the last harvest job status in text output')
     parser.add_argument('--output_script', dest='output_script', default='harvest_source_load.sh', required=False, type=str, help='Output file name for harvest source load script')
     parser.add_argument('--output_list', dest='output_list', default='harvest_source_list.csv', required=False, type=str, help='Output file name for harvest source text dump')
-    
+
 
     parsed_args = parser.parse_args()
     host = parsed_args.host
@@ -29,25 +29,25 @@ def build_harvest_script():
     output_script = parsed_args.output_script
     output_list = parsed_args.output_list
     include_job_status = parsed_args.include_job_status
-    
-    
+
+
     url_params ="q=type:harvest AND organization:%s&rows=1000" % org
     #url_params ="q=type:harvest&rows=1000"
-    
+
     #url_params = urllib.quote(url_params)
     url = "https://%s/api/3/action/package_search?" % (host) + url_params
     print ("url: {0}".format(url))
-   
-    
+
+
     response = requests.get(url, verify=verify_cert)
     result = response.json()
     #print result
-    
+
     script_out = open(output_script, 'w')
     list_out = open(output_list, 'w')
     if include_job_status: list_out.write("Name, Title, URL, Total Datasets, Harvest Job Count, Last Harvest Job Status, Errors (Last Job), Datasets Added (Last Job), Job URL, Job Created, Gather Started, Gather Finished, Job Finished \n")
     else: list_out.write("Name, Title, URL, Total Datasets \n")
-    
+
     print result['result']['count']
     for item in result['result']['results']:
         name = item['name']
@@ -64,16 +64,16 @@ def build_harvest_script():
                freq=extra['value']
            if extra['key'] == "config":
                config=extra['value']
-        
+
         status = item['status']
         job_count = status['job_count']
         total_datasets = status['total_datasets']
         try:
             last_job = status['last_job']
             job_status = last_job['status']
-            try: errors = last_job['stats']['errored'] 
+            try: errors = last_job['stats']['errored']
             except KeyError: errors = 0
-            try: added = last_job['stats']['added'] 
+            try: added = last_job['stats']['added']
             except KeyError: added = 0
             created = last_job['created']
             id = last_job['id']
@@ -81,7 +81,7 @@ def build_harvest_script():
             gather_started = last_job['gather_started']
             gather_finished = last_job['gather_finished']
             harvest_job_url = "https://{0}/harvest/{1}/job/{2}".format(host, name, id)
-            
+
         except (KeyError, TypeError) as e:
             job_status = "Unknown"
             errors = 0
@@ -92,21 +92,22 @@ def build_harvest_script():
             gather_started = "Unknown"
             gather_finished = "Unknown"
             harvest_job_url = "https://{}/harvest/{}".format(host, name)
-        
+
         #install = "ckan --plugin=ckanext-harvest harvester source \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"" % (name, url , source_type, title, "True" , org, freq, config.replace('"','\\"') )
         harvest_source_install_command = "paster --plugin=ckanext-harvest harvester source \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" --config=%s" % (name, url , source_type, title, "True" , org, freq, config.replace('"','\\"'),  config_file_path)
-        
+
         if include_job_status: harvest_source_list = "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"" % (name,title,url,total_datasets,job_count,job_status,errors,added,harvest_job_url,created,gather_started,gather_finished,finished)
         else: harvest_source_list = "\"%s\",\"%s\",\"%s\",\"%s\"" % (name,title,url,total_datasets)
-        
-        
-        
+
+        #fix issue encountered with unicode 'zero-width space' character present in some URLs (\u200b):
+        harvest_source_install_command = harvest_source_install_command.encode('utf-8')
+        harvest_source_list = harvest_source_list.encode('utf-8')
+
         script_out.write(harvest_source_install_command + "\n")
         list_out.write(harvest_source_list + "\n")
-    
+
     script_out.close()
     list_out.close()
-    
+
 
 build_harvest_script()
-
