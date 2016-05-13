@@ -50,6 +50,8 @@ def build_harvest_script():
 
     print result['result']['count']
     for item in result['result']['results']:
+        print(item)
+        print()
         name = item['name']
         title = item['title']
         url = item['url']
@@ -91,7 +93,7 @@ def build_harvest_script():
             finished = "Unknown"
             gather_started = "Unknown"
             gather_finished = "Unknown"
-            harvest_job_url = "https://{}/harvest/{}".format(host, name)
+            harvest_job_url = "https://{0}/harvest/{1}".format(host, name)
 
         #install = "ckan --plugin=ckanext-harvest harvester source \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"" % (name, url , source_type, title, "True" , org, freq, config.replace('"','\\"') )
         harvest_source_install_command = "paster --plugin=ckanext-harvest harvester source \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" --config=%s" % (name, url , source_type, title, "True" , org, freq, config.replace('"','\\"'),  config_file_path)
